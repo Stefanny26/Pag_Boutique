@@ -1,0 +1,12 @@
+<div class="pacas-section">
+  <h1>Pacas Premium</h1>
+  <div class="pacas-list">
+    <div class="paca-card" *ngFor="let paca of pacas">
+      <img [src]="paca.imagen" alt="Imagen de paca" class="paca-img" />
+      <h2>{{ paca.tipo }}</h2>
+      <p>Precio aprox: {{ paca.precio }}</p>
+      <p>{{ paca.casada ? 'Casada' : 'Sola' }}</p>
+      <button (click)="enviarWhatsApp(paca)">Consultar por WhatsApp</button>
+    </div>
+  </div>
+</div>
