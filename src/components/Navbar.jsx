@@ -29,7 +29,7 @@ const Navbar = () => (
         gap: '0.5rem',
       }}>
         <span style={{ fontSize: '2.2rem', color: colors.accent }}>👑</span>
-        My Precious Boutique
+        My Precious Boutique JC
       </span>
       <div style={{ 
         display: 'flex', 
@@ -98,7 +98,7 @@ const Navbar = () => (
           boxShadow: `0 1px 4px ${colors.accentRGB.soft}`,
           transition: 'all 0.2s',
           border: 'none',
-        }}>Admin</Link>
+        }}>Páginas Hermanas</Link>
       </div>
     </div>
     <style>{`

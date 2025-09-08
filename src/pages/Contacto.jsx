@@ -1,153 +1,153 @@
-
 import React from 'react';
 import { colors } from '../styles/colors';
 import fachadaImg from '../assets/Fachada.jpeg';
 
 const Contacto = () => (
-  <section style={{ background: colors.background, padding: '3rem 0' }}>
+  <section style={{ background: colors.background, padding: '4rem 1rem' }}>
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: colors.primary, fontWeight: 900, fontSize: '2.2rem', letterSpacing: '-1px' }}>Contáctanos</h2>
-
-      {/* Info Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-        gap: '2.2rem',
-        marginBottom: '3rem',
+      <h2 style={{
         textAlign: 'center',
+        marginBottom: '3rem',
+        color: colors.primary,
+        fontWeight: 900,
+        fontSize: '2.5rem',
+        letterSpacing: '-1px'
       }}>
-        <div style={{
-          background: colors.white,
-          borderRadius: '14px',
-          boxShadow: `0 2px 8px ${colors.shadow}`,
-          padding: '2rem 1.2rem',
-        }}>
-          <div style={{ fontSize: '2.2rem', color: colors.accent, marginBottom: '0.7rem' }}>🏬</div>
-          <h5 style={{ color: colors.primary, marginBottom: '1rem', fontWeight: 800, fontSize: '1.1rem' }}>Local</h5>
-          <p style={{ fontWeight: 'bold', color: colors.secondary }}>My Precious Kid</p>
-          <p style={{ color: colors.secondary }}>Venta de ropa, zapatos y accesorios solo para niñas. Americana nueva y de pacas.</p>
-          <p style={{ color: colors.secondary }}>Avenida La Lorena & Bahía de Caráquez<br />Santo Domingo, Ecuador</p>
-        </div>
+        📍 Contáctanos
+      </h2>
 
-        <div style={{
-          background: colors.white,
-          borderRadius: '14px',
-          boxShadow: `0 2px 8px ${colors.shadow}`,
-          padding: '2rem 1.2rem',
-        }}>
-          <div style={{ fontSize: '2.2rem', color: colors.accent, marginBottom: '0.7rem' }}>📱</div>
-          <h5 style={{ color: colors.primary, marginBottom: '1rem', fontWeight: 800, fontSize: '1.1rem' }}>Contacto</h5>
-          <div style={{ marginBottom: '0.7rem' }}>
-            <span style={{ fontWeight: 700, color: colors.secondary }}>Boutique:&nbsp;</span>
-            <a
-              href="https://wa.me/593985668130"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: colors.accent, textDecoration: 'none', fontWeight: 700 }}
-            >
-              098 566 8130
-            </a>
-          </div>
-          <div>
-            <span style={{ fontWeight: 700, color: colors.secondary }}>Pacas:&nbsp;</span>
-            <a
-              href="https://wa.me/593983456789"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: colors.accent, textDecoration: 'none', fontWeight: 700 }}
-            >
-              098 345 6789
-            </a>
-          </div>
-          <p style={{ color: colors.secondary, marginTop: '1rem' }}>¡Contáctanos por WhatsApp para cualquier consulta!</p>
-        </div>
-
-        <div style={{
-          background: colors.white,
-          borderRadius: '14px',
-          boxShadow: `0 2px 8px ${colors.shadow}`,
-          padding: '2rem 1.2rem',
-        }}>
-          <div style={{ fontSize: '2.2rem', color: colors.accent, marginBottom: '0.7rem' }}>⏰</div>
-          <h5 style={{ color: colors.primary, marginBottom: '1rem', fontWeight: 800, fontSize: '1.1rem' }}>Horarios</h5>
-          <p style={{ color: colors.secondary }}>Lunes a Sábado: 8am - 18pm</p>
-          <p style={{ color: colors.secondary }}>Domingo: Previa cita</p>
-        </div>
-      </div>
-
-      {/* Mapa e imagen del local */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: '2rem',
-        maxWidth: '900px',
-        margin: '0 auto 1.5rem auto',
-        alignItems: 'stretch',
+        gap: '2.5rem',
+        alignItems: 'start'
       }}>
-        {/* Mapa */}
-        <div style={{
-          background: colors.white,
-          borderRadius: '14px',
-          overflow: 'hidden',
-          boxShadow: `0 2px 8px ${colors.shadow}`,
-          minHeight: '340px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <iframe
-            src="https://www.google.com/maps?q=-0.2583988,-79.171774&hl=es;z=14&amp;output=embed"
-            width="100%"
-            height="340"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            title="Ubicación de My Precious Boutique"
-          />
-        </div>
         {/* Imagen fachada */}
         <div style={{
-          background: colors.white,
-          borderRadius: '14px',
+          borderRadius: '20px',
           overflow: 'hidden',
-          boxShadow: `0 2px 8px ${colors.shadow}`,
-          minHeight: '340px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          boxShadow: `0 8px 30px ${colors.shadow}`,
         }}>
           <img
             src={fachadaImg}
             alt="Fachada de My Precious Boutique"
-            style={{ width: '100%', height: '340px', objectFit: 'cover', display: 'block' }}
+            style={{
+              width: '100%',
+              height: '500px',
+              objectFit: 'cover',
+              display: 'block',
+              transition: 'transform 0.5s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
           />
+        </div>
+
+        {/* Info Cards + Mapa */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+          
+          {/* Tarjetas de Local y Contacto */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            {/* Local */}
+            <div style={{
+              background: colors.white,
+              borderRadius: '16px',
+              padding: '1.8rem',
+              boxShadow: `0 6px 20px ${colors.shadow}`,
+              textAlign: 'center',
+              transition: 'transform 0.3s, box-shadow 0.3s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = `0 12px 30px ${colors.shadow}`; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 6px 20px ${colors.shadow}`; }}
+            >
+              <div style={{ fontSize: '2rem', marginBottom: '0.7rem', color: colors.accent }}>🏬</div>
+              <h5 style={{ color: colors.primary, fontWeight: 800, marginBottom: '0.5rem' }}>Nuestra Boutique</h5>
+              <p style={{ color: colors.secondary, fontWeight: 700, marginBottom: '0.4rem' }}>My Precious Kid</p>
+              <p style={{ color: colors.secondary, fontSize: '0.92rem' }}>Ropa, zapatos y accesorios exclusivos para niñas. ¡Visítanos y encuentra lo que tu pequeña merece!</p>
+              <p style={{ color: colors.secondary, fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                Avenida La Lorena & Bahía de Caráquez<br />
+                Santo Domingo, Ecuador
+              </p>
+            </div>
+
+            {/* Contacto */}
+            <div style={{
+              background: colors.white,
+              borderRadius: '16px',
+              padding: '1.8rem',
+              boxShadow: `0 6px 20px ${colors.shadow}`,
+              textAlign: 'center',
+              transition: 'transform 0.3s, box-shadow 0.3s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = `0 12px 30px ${colors.shadow}`; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 6px 20px ${colors.shadow}`; }}
+            >
+              <div style={{ fontSize: '2rem', marginBottom: '0.7rem', color: colors.accent }}>📱</div>
+              <h5 style={{ color: colors.primary, fontWeight: 800, marginBottom: '0.5rem' }}>Contáctanos</h5>
+              <p style={{ marginBottom: '0.4rem', color: colors.secondary }}>
+                <strong>Boutique: </strong>
+                <a href="https://wa.me/593985668130" style={{ color: colors.accent, textDecoration: 'none', fontWeight: 700 }}>098 566 8130</a>
+              </p>
+              <p style={{ color: colors.secondary }}>
+                <strong>Pacas: </strong>
+                <a href="https://wa.me/593983456789" style={{ color: colors.accent, textDecoration: 'none', fontWeight: 700 }}>098 345 6789</a>
+              </p>
+            </div>
+          </div>
+
+          {/* Horarios */}
+          <div style={{
+            background: colors.white,
+            borderRadius: '16px',
+            padding: '1.8rem',
+            boxShadow: `0 6px 20px ${colors.shadow}`,
+            textAlign: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = `0 12px 30px ${colors.shadow}`; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 6px 20px ${colors.shadow}`; }}
+          >
+            <div style={{ fontSize: '2rem', marginBottom: '0.7rem', color: colors.accent }}>⏰</div>
+            <h5 style={{ color: colors.primary, fontWeight: 800, marginBottom: '0.5rem' }}>Horarios</h5>
+            <p style={{ color: colors.secondary, fontSize: '0.9rem' }}>Lunes a Sábado: 8:00am - 6:00pm</p>
+            <p style={{ color: colors.secondary, fontSize: '0.9rem' }}>Domingo: Previa cita</p>
+          </div>
+
+          {/* Mapa */}
+          <div style={{
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: `0 6px 20px ${colors.shadow}`,
+          }}>
+            <iframe
+              title="Ubicación My Precious Kid"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.708978874615!2d-79.17262132579024!3d-0.25306973540876545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d546d3c8bdfb6f%3A0x3a2f57f632d80463!2sSanto%20Domingo%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1694194325675!5m2!1ses!2sec"
+              width="100%"
+              height="320"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>
 
+    {/* Responsividad */}
     <style>{`
       @media (max-width: 900px) {
-        .contacto-grid {
-          grid-template-columns: 1fr !important;
-        }
         div[style*='grid-template-columns: 1fr 1fr'] {
           grid-template-columns: 1fr !important;
         }
-      }
-      @media (max-width: 700px) {
-        section {
-          padding: 1rem;
+        iframe {
+          height: 200px !important;
         }
-        form {
-          padding: 1rem;
-        }
-        iframe, img {
-          height: 220px !important;
+        img {
+          height: 300px !important;
         }
       }
     `}</style>
   </section>
 );
-
 
 export default Contacto;

@@ -165,7 +165,7 @@ const Inicio = () => (
     </div>
 
     {/* Sección sobre Pacas Premium AAA */}
-  <section style={{ background: colors.white, padding: '2.2rem 1rem', maxWidth: '1100px', margin: '2.5rem auto', borderRadius: '10px', boxShadow: `0 2px 8px ${colors.shadow}` }}>
+    <section style={{ background: colors.white, padding: '2.2rem 1rem', maxWidth: '1100px', margin: '2.5rem auto', borderRadius: '10px', boxShadow: `0 2px 8px ${colors.shadow}` }}>
       <h2 style={{ textAlign: 'center', color: colors.primary, marginBottom: '1.8rem', fontSize: '1.35rem', fontWeight: 800 }}>
         ¿Qué son las Pacas Americanas Premium AAA?
       </h2>
@@ -202,7 +202,7 @@ const Inicio = () => (
       </div>
     </section>
 
-  <br />
+    <br />
     <style>{`
       @media (max-width: 900px) {
         section {

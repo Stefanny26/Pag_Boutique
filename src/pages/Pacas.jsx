@@ -1,158 +1,303 @@
-import React from 'react';
-import { pacas } from '../data/pacas';
-import { colors } from '../styles/colors';
-
-const Pacas = () => (
-
-  <section style={{ padding: '2.5rem 0', background: colors.background }}>
-    <h2 style={{ textAlign: 'center', marginBottom: '2.5rem', color: colors.primary, fontWeight: 900, fontSize: '2.2rem', letterSpacing: '-1px' }}>
-      Pacas de Ropa Americana
-    </h2>
-    <div style={{
-      display: 'flex',
-      gap: '2.5rem',
-      maxWidth: '1400px',
-      margin: '0 auto',
-      alignItems: 'flex-start',
-    }}>
-      {/* Sección informativa fija a la izquierda */}
-      <div style={{
-        flex: '0 0 340px',
-        position: 'sticky',
-        top: '2rem',
-        alignSelf: 'flex-start',
-        background: colors.white,
-        borderRadius: '18px',
-        padding: '2.2rem 1.5rem',
-        boxShadow: `0 4px 18px ${colors.shadow}`,
-        height: 'fit-content',
-        minWidth: '280px',
-        maxWidth: '340px',
-      }}>
-        <h3 style={{ color: colors.accent, marginBottom: '1.2rem', textAlign: 'center', fontWeight: 800, fontSize: '1.3rem' }}>
-          ¿Qué significa que una paca sea "casada"?
-        </h3>
-        <p style={{ color: colors.secondary, fontSize: '1.05rem', lineHeight: '1.7', marginBottom: '1rem' }}>
-          Una paca <strong>"casada"</strong> es aquella que, por su <strong>alta demanda, rápida rotación y stock limitado</strong>, se vende junto con otra paca adicional.
-        </p>
-        <p style={{ color: colors.secondary, fontSize: '1.05rem', lineHeight: '1.7', marginBottom: '1rem' }}>
-          Esta condición garantiza que tengas <strong>mayor surtido</strong>, aproveches la <strong>oferta exclusiva</strong> y asegures disponibilidad para tu negocio.
-        </p>
-        <p style={{ color: colors.accent, fontWeight: 700, marginTop: '1.2rem', textAlign: 'center' }}>
-          ¡Así aseguras más variedad y mejor rentabilidad en tu compra!
-        </p>
-      </div>
-
-      {/* Contenedor de cards de pacas */}
-      <div style={{
-        flex: '1',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-        gap: '2.5rem 2rem',
-        justifyItems: 'center',
-        alignItems: 'stretch',
-      }}>
-        {pacas.map((paca, idx) => (
+import React, { useState, useEffect } from 'react';
+  return (
+    <section style={{ background: colors.white, minHeight: '100vh', padding: 0 }}>
+      <div
+        style={{
+          maxWidth: '1600px',
+          margin: '0 auto',
+          display: 'flex',
+          alignItems: 'flex-start',
+          padding: '2.5rem 1.5rem 2.5rem 1.5rem',
+          gap: '2.5rem',
+        }}
+      >
+        {/* Filtros laterales */}
+        <aside
+          style={{
+            minWidth: '220px',
+            maxWidth: '260px',
+            marginRight: '1rem',
+            borderRight: `1.5px solid ${colors.background}`,
+            paddingRight: '1.5rem',
+          }}
+        >
           <div
-            key={idx}
             style={{
-              background: colors.white,
-              borderRadius: '18px',
-              boxShadow: `0 4px 18px ${colors.shadow}`,
-              padding: '0',
-              width: '100%',
-              maxWidth: '320px',
-              textAlign: 'left',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'stretch',
-              minHeight: '420px',
-              overflow: 'hidden',
-              position: 'relative',
+              fontWeight: 700,
+              fontSize: '1.25rem',
+              color: colors.primary,
+              marginBottom: '2.2rem',
+              letterSpacing: '-1px',
             }}
           >
-            <div style={{ width: '100%', height: '200px', background: colors.background, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              <img
-                src={paca.imagen}
-                alt={paca.nombre}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: 0,
-                  border: 'none',
-                  backgroundColor: colors.background,
-                  display: 'block',
-                }}
-              />
-            </div>
-            <div style={{ padding: '1.2rem 1.1rem 1.1rem 1.1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-                <h3 style={{ color: colors.primary, fontWeight: 900, fontSize: '1.13rem', margin: 0, lineHeight: 1.18 }}>{paca.nombre}</h3>
-                <span style={{ color: colors.accent, fontWeight: 800, fontSize: '1.08rem' }}>${paca.precio}</span>
-              </div>
-              <div style={{ color: colors.secondary, fontSize: '0.99rem', lineHeight: 1.5, marginBottom: '0.1rem' }}>{paca.descripcion}</div>
-              <div style={{ display: 'flex', gap: '0.7rem', fontSize: '0.97rem', color: colors.secondary, marginBottom: '0.1rem' }}>
-                <span><strong>Tipo:</strong> {paca.tipo}</span>
-                {paca.prendas && <span style={{ color: colors.accent }}><strong>Prendas:</strong> {paca.prendas}</span>}
-              </div>
-              <a
-                href={`https://wa.me/593983402482?text=Hola!%20Quiero%20comprar%20la%20paca%20${encodeURIComponent(paca.nombre)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  border: `1.5px solid ${colors.accent}`,
-                  color: colors.accent,
-                  background: 'transparent',
-                  padding: '0.8rem 0',
-                  borderRadius: '7px',
-                  textDecoration: 'none',
-                  display: 'block',
-                  marginTop: '0.7rem',
-                  fontWeight: 800,
-                  fontSize: '1.01rem',
-                  letterSpacing: '0.5px',
-                  boxShadow: 'none',
-                  borderWidth: '2px',
-                  textAlign: 'center',
-                  transition: 'background 0.2s, color 0.2s',
-                }}
-                onMouseOver={e => { e.target.style.background = colors.accent; e.target.style.color = colors.white; }}
-                onMouseOut={e => { e.target.style.background = 'transparent'; e.target.style.color = colors.accent; }}
-              >
-                Comprar por WhatsApp
-              </a>
-            </div>
+            Filtrar por marca
           </div>
-        ))}
+          {MARCAS.map(m => (
+            <div
+              key={m}
+              style={{
+                marginBottom: '1.5rem',
+                borderBottom: `1px solid ${colors.background}`,
+                paddingBottom: '1.1rem',
+              }}
+            >
+              <button
+                onClick={() => setMarca(m)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: marca === m ? colors.accent : colors.primary,
+                  fontWeight: marca === m ? 900 : 600,
+                  fontSize: '1.08rem',
+                  cursor: 'pointer',
+                  width: '100%',
+                  textAlign: 'left',
+                  padding: 0,
+                  outline: 'none',
+                  transition: 'color 0.2s',
+                }}
+              >
+                {m}
+              </button>
+            </div>
+          ))}
+        </aside>
+
+        {/* Catálogo */}
+        <main style={{ flex: 1, paddingLeft: 0 }}>
+          <h2
+            style={{
+              textAlign: 'left',
+              color: colors.primary,
+              fontWeight: 900,
+              fontSize: '1.3rem',
+              marginBottom: '2.2rem',
+              letterSpacing: '-1px',
+            }}
+          >
+            Colección de Pacas
+          </h2>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gap: '2.2rem 1.2rem',
+              alignItems: 'start',
+            }}
+          >
+            {loading ? (
+              <div style={{ color: colors.secondary, fontSize: '1.1rem', padding: '2rem' }}>Cargando pacas...</div>
+            ) : error ? (
+              <div style={{ color: 'red', fontSize: '1.1rem', padding: '2rem' }}>{error}</div>
+            ) : (
+              pacasFiltradas.map((paca, idx) => (
+                <div
+                  key={paca.id || idx}
+                  style={{
+                    background: colors.white,
+                    borderRadius: '18px',
+                    boxShadow: `0 4px 18px ${colors.shadow}`,
+                    padding: '0',
+                    width: '100%',
+                    maxWidth: '320px',
+                    textAlign: 'left',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'stretch',
+                    minHeight: '420px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                  }}
+                >
+                  <div style={{ position: 'relative', width: '100%', height: '200px' }}>
+                    {!paca.disponible && (
+                      <span style={{
+                        position: 'absolute',
+                        top: 10,
+                        left: 10,
+                        background: colors.accent,
+                        color: colors.white,
+                        fontWeight: 900,
+                        borderRadius: '8px',
+                        padding: '0.3rem 0.8rem',
+                        fontSize: '0.95rem',
+                        zIndex: 2,
+                        letterSpacing: '1px',
+                      }}>
+                        AGOTADO
+                      </span>
+                    )}
+                    <img
+                      src={paca.imagen}
+                      alt={paca.nombre}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: 0,
+                        border: 'none',
+                        backgroundColor: colors.background,
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      padding: '1.2rem 1.1rem 1.1rem 1.1rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.4rem',
+                      flex: 1,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '0.2rem',
+                      }}
+                    >
+                      <h3
+                        style={{
+                          color: colors.primary,
+                          fontWeight: 900,
+                          fontSize: '0.98rem',
+                          margin: 0,
+                          lineHeight: 1.18,
+                        }}
+                      >
+                        {paca.nombre}
+                      </h3>
+                      <span
+                        style={{
+                          color: colors.accent,
+                          fontWeight: 800,
+                          fontSize: '0.93rem',
+                        }}
+                      >
+                        ${paca.precio}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        color: colors.secondary,
+                        fontSize: '0.89rem',
+                        lineHeight: 1.5,
+                        marginBottom: '0.1rem',
+                      }}
+                    >
+                      {paca.descripcion}
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.7rem',
+                        fontSize: '0.87rem',
+                        color: colors.secondary,
+                        marginBottom: '0.1rem',
+                      }}
+                    >
+                      <span>
+                        <strong>Tipo:</strong> {paca.tipo === 'Casada' ? <span style={{ color: colors.accent, fontWeight: 700 }}>Casada</span> : 'Sola'}
+                      </span>
+                      {paca.prendas && (
+                        <span style={{ color: colors.accent }}>
+                          <strong>Prendas:</strong> {paca.prendas}
+                        </span>
+                      )}
+                      {paca.marca && (
+                        <span style={{ color: colors.primary }}>
+                          <strong>Marca:</strong> {paca.marca}
+                        </span>
+                      )}
+                    </div>
+                    <a
+                      href={`https://wa.me/593983402482?text=Hola!%20Quiero%20comprar%20la%20paca%20${encodeURIComponent(
+                        paca.nombre
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        border: `1.5px solid ${colors.accent}`,
+                        color: colors.accent,
+                        background: 'transparent',
+                        padding: '0.8rem 0',
+                        borderRadius: '7px',
+                        textDecoration: 'none',
+                        display: 'block',
+                        marginTop: '0.7rem',
+                        fontWeight: 800,
+                        fontSize: '0.91rem',
+                        letterSpacing: '0.5px',
+                        boxShadow: 'none',
+                        borderWidth: '2px',
+                        textAlign: 'center',
+                        transition: 'background 0.2s, color 0.2s',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.background = colors.accent;
+                        e.target.style.color = colors.white;
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.background = 'transparent';
+                        e.target.style.color = colors.accent;
+                      }}
+                    >
+                      Comprar por WhatsApp
+                    </a>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </main>
+
+        {/* Aside: Información sobre precios, cantidades y pacas casadas */}
+        <aside style={{
+          width: '320px',
+          padding: '1.3rem',
+          background: colors.background,
+          borderRadius: '14px',
+          boxShadow: `0 3px 10px ${colors.shadow}`,
+          marginLeft: '2.5rem',
+          fontSize: '0.92rem',
+          color: colors.secondary,
+          lineHeight: '1.5',
+          position: 'relative',
+        }}>
+          <h3 style={{
+            color: colors.accent,
+            fontWeight: 800,
+            fontSize: '1.05rem',
+            marginBottom: '0.8rem',
+            borderBottom: `2px solid ${colors.accent}`,
+            paddingBottom: '0.3rem'
+          }}>
+            Importante sobre precios, cantidades y pacas casadas
+          </h3>
+          <p>
+            Cada ítem que ves en nuestra lista corresponde a una paca diferente, con prendas y cantidades variables,
+            por lo que los precios también cambian según cada tipo. Tenemos pacas diseñadas tanto para clima cálido (verano)
+            como para clima frío (invierno).
+          </p>
+          <p>
+            Por ejemplo, la <strong>Paca de Niño Verano Premium</strong> incluye aproximadamente 400 prendas variadas
+            como blusas, shorts, pantalones, camisetas, licras y vestidos para niños y niñas desde recién nacido hasta 14 años.
+          </p>
+          <p>
+            Algunas pacas, debido a su alta rotación y demanda, son <strong>“pacadas casadas”</strong>. Esto significa que para
+            adquirir esa paca, se debe comprar junto con otra paca adicional, la cual será indicada por nuestra gerencia, según
+            disponibilidad y stock.
+          </p>
+          <p>
+            Esto nos permite mantener un equilibrio en inventarios y garantizar que todos nuestros clientes puedan acceder a estas
+            pacas tan solicitadas.
+          </p>
+          <p style={{ fontStyle: 'italic', color: colors.primary, marginTop: '0.8rem' }}>
+            Nota: No es posible elegir cualquier paca para combinar; la paca adicional será asignada por nuestro equipo autorizado.
+          </p>
+        </aside>
       </div>
-    </div>
-
-    <style>{`
-      @media (max-width: 1024px) {
-        section > div {
-          flex-direction: column;
-        }
-        div[style*='position: sticky'] {
-          position: static;
-          margin-bottom: 2rem;
-          width: 100%;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-      }
-      @media (max-width: 700px) {
-        section {
-          padding: 1rem;
-        }
-        div[style*='flex-wrap'] > div {
-          width: 100% !important;
-          margin-bottom: 1rem;
-        }
-      }
-    `}</style>
-  </section>
-);
-
-export default Pacas;
+    </section>
