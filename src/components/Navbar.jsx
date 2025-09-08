@@ -27,6 +27,7 @@ const Navbar = () => (
         display: 'flex',
         alignItems: 'center',
         gap: '0.5rem',
+        marginRight: '2.5rem',
       }}>
         <span style={{ fontSize: '2.2rem', color: colors.accent }}>👑</span>
         My Precious Boutique JC
@@ -87,9 +88,9 @@ const Navbar = () => (
           borderBottom: '2px solid transparent',
           transition: 'all 0.2s',
         }}>Contacto</Link>
-        <Link to='/admin' style={{ 
-          color: colors.white, 
-          textDecoration: 'none', 
+        <Link to='/admin' style={{
+          color: colors.white,
+          textDecoration: 'none',
           fontWeight: 700,
           fontSize: '1.13rem',
           padding: '0.5rem 1.1rem',
@@ -98,7 +99,28 @@ const Navbar = () => (
           boxShadow: `0 1px 4px ${colors.accentRGB.soft}`,
           transition: 'all 0.2s',
           border: 'none',
-        }}>Páginas Hermanas</Link>
+        }}>
+          Páginas Hermanas
+        </Link>
+        <Link to='/iniciar-sesion' style={{
+          color: colors.primary,
+          textDecoration: 'none',
+          fontWeight: 700,
+          fontSize: '1.5rem',
+          padding: '0.4rem 0.7rem',
+          background: 'none',
+          borderRadius: '50%',
+          border: `2px solid ${colors.primary}`,
+          marginLeft: '0.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.2s',
+        }}
+          title='Iniciar Sesión'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path fill={colors.primary} d="M12 12c2.7 0 8 1.34 8 4v2H4v-2c0-2.66 5.3-4 8-4Zm0-2a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/></svg>
+        </Link>
       </div>
     </div>
     <style>{`

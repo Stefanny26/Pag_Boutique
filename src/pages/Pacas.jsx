@@ -1,4 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { colors } from '../styles/colors';
+
+const MARCAS = [
+  'Todas',
+  'Leon',
+  'Santex',
+  'Givenchy',
+  'Otra',
+];
+
+const Pacas = () => {
+  const [pacas, setPacas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [marca, setMarca] = useState('Todas');
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:4000/api/pacas')
+      .then(res => res.json())
+      .then(data => {
+        setPacas(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error al cargar las pacas');
+        setLoading(false);
+      });
+  }, []);
+
+  const pacasFiltradas = marca === 'Todas'
+    ? pacas
+    : pacas.filter(p => (p.marca || '').toLowerCase() === marca.toLowerCase());
+
   return (
     <section style={{ background: colors.white, minHeight: '100vh', padding: 0 }}>
       <div
@@ -301,3 +335,7 @@ import React, { useState, useEffect } from 'react';
         </aside>
       </div>
     </section>
+  );
+};
+
+export default Pacas;

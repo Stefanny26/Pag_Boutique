@@ -10,6 +10,8 @@ import Boutique from './pages/Boutique.jsx';
 import Nosotros from './pages/Nosotros.jsx';
 import Contacto from './pages/Contacto.jsx';
 import Admin from './pages/Admin.jsx';
+import InicioSesion from './pages/InicioSesion.jsx';
+import PanelAdmin from './pages/PanelAdmin.jsx';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/iniciar-sesion' element={<InicioSesion />} />
+          <Route path='/panel-admin' element={<PanelAdmin />} />
         </Routes>
       </main>
       <Footer />

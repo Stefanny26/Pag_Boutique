@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react';
-import { productos } from '../data/boutique';
+import React, { useState, useEffect } from 'react';
 import { colors } from '../styles/colors';
 
 const CATEGORIAS = [
@@ -13,6 +12,23 @@ const CATEGORIAS = [
 
 const Boutique = () => {
   const [categoria, setCategoria] = useState('Ropa');
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/productos')
+      .then(res => res.json())
+      .then(data => {
+        setProductos(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error al cargar los productos');
+        setLoading(false);
+      });
+  }, []);
 
   const productosFiltrados = productos.filter(
     p => CATEGORIAS.find(cat => cat.nombre === categoria).tipos.map(t => t.toLowerCase()).includes((p.tipo || '').toLowerCase())
@@ -107,7 +123,13 @@ const Boutique = () => {
             gap: '2.2rem 1.2rem',
             alignItems: 'start',
           }}>
-            {productosFiltrados.map((prod, idx) => <Card prod={prod} key={idx} />)}
+            {loading ? (
+              <div style={{ color: colors.secondary, fontSize: '1.1rem', padding: '2rem' }}>Cargando productos...</div>
+            ) : error ? (
+              <div style={{ color: 'red', fontSize: '1.1rem', padding: '2rem' }}>{error}</div>
+            ) : (
+              productosFiltrados.map((prod, idx) => <Card prod={prod} key={prod.id || idx} />)
+            )}
           </div>
         </main>
       </div>

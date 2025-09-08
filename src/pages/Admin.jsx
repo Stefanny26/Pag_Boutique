@@ -1,6 +1,5 @@
 import React from 'react';
 import { colors } from '../styles/colors';
-
 import iconoTiktok from '../assets/tik-tok.png';
 import iconoInstagram from '../assets/icono1.png';
 import imgAlexa from '../assets/AlexaStore.jpg';
@@ -34,7 +33,7 @@ const hermanaPages = [
 ];
 
 const Admin = () => (
-  <section style={{ padding: '3rem 1rem', background: colors.background }}>
+  <section style={{ padding: '3rem 1rem', background: colors.background, minHeight: '100vh' }}>
     <h3 style={{
       textAlign: 'center',
       margin: '0 0 2.5rem 0',
@@ -43,9 +42,8 @@ const Admin = () => (
       color: colors.primary,
       letterSpacing: '0.5px'
     }}>
-     Nuestras Páginas Hermanas
+      Nuestras Páginas Hermanas
     </h3>
-
     <div style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -104,6 +102,7 @@ const Admin = () => (
         </div>
       ))}
     </div>
+
   </section>
 );
 
