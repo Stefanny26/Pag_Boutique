@@ -36,15 +36,42 @@ const PacasAdmin = ({ colors }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+    setError('');
     try {
       const url = editId ? `${API}/api/pacas/${editId}` : `${API}/api/pacas`;
       const method = editId ? 'PUT' : 'POST';
+      
+      // Validar campos obligatorios
+      if (!form.nombre || !form.precio) {
+        setError('Nombre y precio son obligatorios');
+        setSaving(false);
+        return;
+      }
+      
+      // Convertir precio a número
+      const formData = { 
+        ...form,
+        precio: parseFloat(form.precio)
+      };
+      
+      console.log('Enviando datos:', formData);
+      console.log('URL:', url);
+      console.log('Método:', method);
+      
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+        body: JSON.stringify(formData)
       });
-      if (!res.ok) throw new Error('Error al guardar');
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Error al guardar');
+      }
+      
+      const data = await res.json();
+      console.log('Respuesta del servidor:', data);
+      
       setForm({
         nombre: '',
         precio: '',
@@ -58,8 +85,9 @@ const PacasAdmin = ({ colors }) => {
       setShowForm(false);
       setEditId(null);
       fetchPacas();
-    } catch {
-      setError('Error al guardar la paca');
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setError(`Error al guardar la paca: ${error.message}`);
     }
     setSaving(false);
   };
@@ -114,6 +142,7 @@ const PacasAdmin = ({ colors }) => {
           }}
         >
           <h4 style={{ color: colors.primary, marginBottom: 10 }}>{editId ? 'Editar Paca' : 'Nueva Paca'}</h4>
+          {error && <div style={{ color: 'red', marginBottom: 10, padding: '8px', backgroundColor: '#ffeeee', borderRadius: 5 }}>{error}</div>}
           <input
             required
             placeholder="Nombre"

@@ -22,21 +22,50 @@ const BoutiqueAdmin = ({ colors }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+    setError('');
     try {
-      const url = editId ? `http://localhost:4000/api/productos/${editId}` : 'http://localhost:4000/api/productos';
+      // Usamos la variable API para la URL
+      const url = editId ? `${API}/api/productos/${editId}` : `${API}/api/productos`;
       const method = editId ? 'PUT' : 'POST';
-  const res = await fetch(url, {
+      
+      // Validar campos obligatorios
+      if (!form.nombre || !form.precio) {
+        setError('Nombre y precio son obligatorios');
+        setSaving(false);
+        return;
+      }
+      
+      // Convertir precio a número
+      const formData = { 
+        ...form,
+        precio: parseFloat(form.precio)
+      };
+      
+      console.log('Enviando datos de producto:', formData);
+      console.log('URL:', url);
+      console.log('Método:', method);
+      
+      const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+        body: JSON.stringify(formData)
       });
-      if (!res.ok) throw new Error('Error al guardar');
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Error al guardar');
+      }
+      
+      const data = await res.json();
+      console.log('Respuesta del servidor:', data);
+      
       setForm({ nombre: '', talla: '', precio: '', tipo: '', imagen: '' });
       setShowForm(false);
       setEditId(null);
       fetchProductos();
-    } catch {
-      setError('Error al guardar el producto');
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setError(`Error al guardar el producto: ${error.message}`);
     }
     setSaving(false);
   };
@@ -60,6 +89,7 @@ const BoutiqueAdmin = ({ colors }) => {
       {showForm && (
         <form onSubmit={handleSubmit} style={{ background: colors.background, padding: 18, borderRadius: 10, marginBottom: 24, boxShadow: `0 2px 8px ${colors.shadow}`, maxWidth: 420 }}>
           <h4 style={{ color: colors.primary, marginBottom: 10 }}>{editId ? 'Editar Producto' : 'Nuevo Producto'}</h4>
+          {error && <div style={{ color: 'red', marginBottom: 10, padding: '8px', backgroundColor: '#ffeeee', borderRadius: 5 }}>{error}</div>}
           <input required placeholder="Nombre" value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} style={{ width: '100%', marginBottom: 8, padding: 7, borderRadius: 6, border: `1px solid ${colors.accent}` }} />
           <input placeholder="Talla" value={form.talla} onChange={e => setForm(f => ({ ...f, talla: e.target.value }))} style={{ width: '100%', marginBottom: 8, padding: 7, borderRadius: 6, border: `1px solid ${colors.accent}` }} />
           <input required type="number" placeholder="Precio" value={form.precio} onChange={e => setForm(f => ({ ...f, precio: e.target.value }))} style={{ width: '100%', marginBottom: 8, padding: 7, borderRadius: 6, border: `1px solid ${colors.accent}` }} />
