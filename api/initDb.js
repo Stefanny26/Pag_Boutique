@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { pool } from './models/db.js';
+import pool from './models/db.js';
 
 // Configurar __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);

@@ -4,7 +4,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node railway-start.js"
+    "start": "node server.js",
+    "create-tables": "node crearTablas.js",
+    "check-db": "node checkDb.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
