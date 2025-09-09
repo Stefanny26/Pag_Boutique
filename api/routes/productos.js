@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const Producto = require('../models/producto');
+import { Router } from 'express';
+import Producto from '../models/producto.js';
+
+const router = Router();
 
 router.get('/', async (req, res) => {
   const productos = await Producto.getAll();
@@ -27,4 +28,4 @@ router.delete('/:id', async (req, res) => {
   res.json({ success: true });
 });
 
-module.exports = router;
+export default router;

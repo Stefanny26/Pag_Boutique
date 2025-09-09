@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const Paca = require('../models/paca');
+import { Router } from 'express';
+import Paca from '../models/paca.js';
+
+const router = Router();
 
 router.get('/', async (req, res) => {
   const pacas = await Paca.getAll();
@@ -27,4 +28,4 @@ router.delete('/:id', async (req, res) => {
   res.json({ success: true });
 });
 
-module.exports = router;
+export default router;
