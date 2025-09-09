@@ -2,7 +2,7 @@ services:
   # Servicio Frontend
   - type: web
     name: pag-boutique-frontend
-    env: node
+    runtime: node
     buildCommand: npm install && npm run build
     startCommand: node server.js
     healthCheckPath: /health
@@ -13,7 +13,7 @@ services:
   # Servicio Backend API
   - type: web
     name: pag-boutique-api
-    env: node
+    runtime: node
     rootDir: api
     buildCommand: npm install
     startCommand: node server.js
@@ -28,4 +28,5 @@ services:
 databases:
   - name: pag-boutique-db
     plan: free
-    type: postgres
+    databaseName: pag_boutique_db
+    ipAllowList: []
