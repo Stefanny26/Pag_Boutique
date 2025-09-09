@@ -11,7 +11,8 @@ const BoutiqueAdmin = ({ colors }) => {
 
   const fetchProductos = () => {
     setLoading(true);
-    fetch('http://localhost:4000/api/productos')
+  const API = import.meta.env.VITE_API_URL || '';
+  fetch(`${API}/api/productos`)
       .then(res => res.json())
       .then(data => { setProductos(data); setLoading(false); })
       .catch(() => { setError('Error al cargar productos'); setLoading(false); });
@@ -24,7 +25,7 @@ const BoutiqueAdmin = ({ colors }) => {
     try {
       const url = editId ? `http://localhost:4000/api/productos/${editId}` : 'http://localhost:4000/api/productos';
       const method = editId ? 'PUT' : 'POST';
-      const res = await fetch(url, {
+  const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -48,7 +49,7 @@ const BoutiqueAdmin = ({ colors }) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar este producto?')) return;
-    await fetch(`http://localhost:4000/api/productos/${id}`, { method: 'DELETE' });
+  await fetch(`${API}/api/productos/${id}`, { method: 'DELETE' });
     fetchProductos();
   };
 
@@ -72,7 +73,7 @@ const BoutiqueAdmin = ({ colors }) => {
                 if (!file) return;
                 const data = new FormData();
                 data.append('imagen', file);
-                const res = await fetch('http://localhost:4000/api/upload', { method: 'POST', body: data });
+                const res = await fetch(`${API}/api/upload`, { method: 'POST', body: data });
                 const result = await res.json();
                 if (result.url) setForm(f => ({ ...f, imagen: result.url }));
               }}

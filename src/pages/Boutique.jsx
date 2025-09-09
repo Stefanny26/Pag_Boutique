@@ -18,7 +18,8 @@ const Boutique = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('/api/productos')
+  const API = import.meta.env.VITE_API_URL || '';
+  fetch(`${API}/api/productos`)
       .then(res => res.json())
       .then(data => {
         setProductos(data);

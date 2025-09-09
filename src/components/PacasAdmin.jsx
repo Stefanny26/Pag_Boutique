@@ -11,7 +11,8 @@ const PacasAdmin = ({ colors }) => {
 
   const fetchPacas = () => {
     setLoading(true);
-    fetch('http://localhost:4000/api/pacas')
+  const API = import.meta.env.VITE_API_URL || '';
+  fetch(`${API}/api/pacas`)
       .then(res => res.json())
       .then(data => { setPacas(data); setLoading(false); })
       .catch(() => { setError('Error al cargar pacas'); setLoading(false); });
@@ -24,7 +25,7 @@ const PacasAdmin = ({ colors }) => {
     try {
       const url = editId ? `http://localhost:4000/api/pacas/${editId}` : 'http://localhost:4000/api/pacas';
       const method = editId ? 'PUT' : 'POST';
-      const res = await fetch(url, {
+  const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -48,7 +49,7 @@ const PacasAdmin = ({ colors }) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar esta paca?')) return;
-    await fetch(`http://localhost:4000/api/pacas/${id}`, { method: 'DELETE' });
+  await fetch(`${API}/api/pacas/${id}`, { method: 'DELETE' });
     fetchPacas();
   };
 
@@ -73,7 +74,7 @@ const PacasAdmin = ({ colors }) => {
                 if (!file) return;
                 const data = new FormData();
                 data.append('imagen', file);
-                const res = await fetch('http://localhost:4000/api/upload', { method: 'POST', body: data });
+                const res = await fetch(`${API}/api/upload`, { method: 'POST', body: data });
                 const result = await res.json();
                 if (result.url) setForm(f => ({ ...f, imagen: result.url }));
               }}

@@ -17,7 +17,8 @@ const Pacas = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:4000/api/pacas')
+  const API = import.meta.env.VITE_API_URL || '';
+  fetch(`${API}/api/pacas`)
       .then(res => res.json())
       .then(data => {
         setPacas(data);
