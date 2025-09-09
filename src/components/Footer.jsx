@@ -17,7 +17,7 @@ const Footer = () => (
     }}>
       <div style={{ 
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
         gap: '1.1rem',
         marginBottom: '1.1rem',
         alignItems: 'start',
@@ -39,11 +39,11 @@ const Footer = () => (
             margin: 0,
             color: colors.verdeGris
           }}>
-            <li style={{ marginBottom: '0.3rem' }}>Moda infantil de calidad</li>
-            <li style={{ marginBottom: '0.3rem' }}>Diseños únicos y adorables</li>
-            <li style={{ marginBottom: '0.3rem' }}>Atención personalizada</li>
-            <li style={{ marginBottom: '0.3rem' }}>Vestimenta temática y casual</li>
-            <li style={{ marginBottom: '0.3rem' }}>Amor en cada prenda</li>
+            <li style={{ marginBottom: '0.3rem' }}>Distribuidores de pacas premium</li>
+            <li style={{ marginBottom: '0.3rem' }}>Medias pacas disponibles</li>
+            <li style={{ marginBottom: '0.3rem' }}>Venta de ropa al por mayor</li>
+            <li style={{ marginBottom: '0.3rem' }}>Ropa por unidad seleccionada</li>
+            <li style={{ marginBottom: '0.3rem' }}>Calidad garantizada en cada prenda</li>
           </ul>
         </div>
 
@@ -108,13 +108,16 @@ const Footer = () => (
             Sto. Domingo, Ecuador
           </p>
           <p style={{ color: colors.verdeGris, marginBottom: '0.3rem', fontSize: '0.97rem' }}>
-            <strong>Teléfono:</strong> +593 98 566 8130
+            <strong>Boutique:</strong> +593 98 566 8130
+          </p>
+          <p style={{ color: colors.verdeGris, marginBottom: '0.3rem', fontSize: '0.97rem' }}>
+            <strong>Pacas Premium:</strong> +593 99 475 2305
           </p>
           <p style={{ color: colors.verdeGris, marginBottom: '0.3rem', fontSize: '0.97rem' }}>
             <strong>Correo:</strong> infom_ypreciousboutiquejc.com
           </p>
           <p style={{ color: colors.verdeGris, marginBottom: '0.3rem', fontSize: '0.97rem' }}>
-            <strong>Horario:</strong> Lun - Sab: 9:00 AM - 7:00 PM
+            <strong>Horario:</strong> Lun - Sab: 8:00 AM - 6:00 PM
           </p>
         </div>
       </div>
@@ -132,7 +135,7 @@ const Footer = () => (
         fontSize: '0.89rem',
         paddingBottom: '0.2rem'
       }}>
-        © <strong>My Precious Boutique JC</strong>. Todos los derechos reservados.
+        © <strong>My Precious Boutique JC & Distribuidora de Pacas Premium</strong>. Todos los derechos reservados.
       </p>
     </div>
 
