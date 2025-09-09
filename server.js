@@ -20,9 +20,16 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api/pacas', pacasRouter);
 app.use('/api/productos', productosRouter);
 
-// Enviar index.html para rutas no encontradas (SPA)
+// Manejo de errores simple para rutas API
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'Endpoint no encontrado' });
+});
+
+// Enviar index.html para rutas del frontend (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'), (err) => {
+    if (err) res.status(500).send(err);
+  });
 });
 
 // Puerto dinámico para Railway
