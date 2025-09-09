@@ -1,5 +1,7 @@
-# Este archivo es una solución específica para Railway
-# Carga y ejecuta server.js explícitamente
+/**
+ * Este archivo es una solución específica para Railway
+ * Carga y ejecuta server.js explícitamente
+ */
 
 import { fileURLToPath } from 'url';
 import path from 'path';
