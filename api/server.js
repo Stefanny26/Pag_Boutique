@@ -4,6 +4,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import pacasRouter from './routes/pacas.js';
 import productosRouter from './routes/productos.js';
+import { initializeDatabase } from './initDb.js';
 
 // Configure Express
 const app = express();
@@ -35,4 +36,14 @@ app.use('*', (req, res) => {
 
 // Dynamic port for Railway
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`API server running on port ${PORT}`));
+
+// Inicializar la base de datos y luego iniciar el servidor
+initializeDatabase()
+  .then(() => {
+    app.listen(PORT, () => console.log(`API server running on port ${PORT}`));
+  })
+  .catch(err => {
+    console.error('Error al inicializar la aplicación:', err);
+    // Iniciar el servidor de todos modos
+    app.listen(PORT, () => console.log(`API server running on port ${PORT} (sin inicialización de BD)`));
+  });
