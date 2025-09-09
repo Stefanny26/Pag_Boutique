@@ -10,8 +10,18 @@ app.use(cors());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Agregar endpoint de health check para servicios de hosting
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Servir frontend desde dist
 app.use(express.static(path.join(__dirname, 'dist')));
+
+// Health check endpoint para Railway
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 // Enviar index.html para rutas del frontend (SPA)
 app.get('*', (req, res) => {

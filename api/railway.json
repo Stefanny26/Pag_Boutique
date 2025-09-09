@@ -1,8 +1,4 @@
 {
-  "scripts": {
-    "build": "npm run build",
-    "start": "npm run start"
-  },
   "healthcheck": {
     "path": "/health",
     "interval": "15s",

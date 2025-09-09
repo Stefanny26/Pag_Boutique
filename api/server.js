@@ -10,6 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Agregar endpoint de health check para servicios de hosting
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Configure __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +22,11 @@ const __dirname = path.dirname(__filename);
 // API Routes
 app.use('/api/pacas', pacasRouter);
 app.use('/api/productos', productosRouter);
+
+// Health check endpoint para Railway
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 // Simple error handling for API routes
 app.use('*', (req, res) => {
