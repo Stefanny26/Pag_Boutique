@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { colors } from '../styles/colors';
 
+// Importar imagen por defecto para cuando no hay imagen
+import defaultPacaImg from '../assets/PAca1.png';
+
 const MARCAS = [
   'Todas',
   'Leon',
@@ -15,17 +18,46 @@ const Pacas = () => {
   const [error, setError] = useState(null);
   const [marca, setMarca] = useState('Todas');
 
+  // Base URL de la API
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+  
+  // Función para arreglar URLs de imágenes
+  const fixImageUrl = (url) => {
+    if (!url) return '';
+    
+    // Si ya es una URL completa, usarla como está
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    
+    // Si es una ruta relativa (comienza con /), añadir la base URL
+    if (url.startsWith('/')) {
+      return `${API}${url}`;
+    }
+    
+    // En cualquier otro caso, asumimos que es una ruta relativa sin / inicial
+    return `${API}/${url}`;
+  };
+  
   useEffect(() => {
     setLoading(true);
-  const API = import.meta.env.VITE_API_URL || '';
-  fetch(`${API}/api/pacas`)
-      .then(res => res.json())
+    console.log("Obteniendo pacas desde:", `${API}/api/pacas`);
+    
+    fetch(`${API}/api/pacas`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Error del servidor: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log("Pacas obtenidas:", data);
         setPacas(data);
         setLoading(false);
       })
       .catch(err => {
-        setError('Error al cargar las pacas');
+        console.error("Error al cargar pacas:", err);
+        setError(`Error al cargar las pacas: ${err.message}`);
         setLoading(false);
       });
   }, []);
@@ -125,7 +157,17 @@ const Pacas = () => {
             ) : error ? (
               <div style={{ color: 'red', fontSize: '1.1rem', padding: '2rem' }}>{error}</div>
             ) : (
-              pacasFiltradas.map((paca, idx) => (
+              pacasFiltradas.length === 0 ? (
+                <div style={{ 
+                  color: colors.secondary, 
+                  fontSize: '1.1rem', 
+                  padding: '2rem', 
+                  gridColumn: '1 / -1',
+                  textAlign: 'center'
+                }}>
+                  No hay pacas disponibles para esta categoría
+                </div>
+              ) : pacasFiltradas.map((paca, idx) => (
                 <div
                   key={paca.id || idx}
                   style={{
@@ -162,19 +204,41 @@ const Pacas = () => {
                         AGOTADO
                       </span>
                     )}
-                    <img
-                      src={paca.imagen}
-                      alt={paca.nombre}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        borderRadius: 0,
-                        border: 'none',
-                        backgroundColor: colors.background,
-                        display: 'block',
-                      }}
-                    />
+                    {paca.imagen ? (
+                      <img
+                        src={fixImageUrl(paca.imagen)}
+                        alt={paca.nombre}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: 0,
+                          border: 'none',
+                          backgroundColor: colors.background,
+                          display: 'block',
+                        }}
+                        onError={(e) => {
+                          console.error("Error cargando imagen:", paca.imagen);
+                          e.target.onerror = null;
+                          e.target.src = defaultPacaImg;
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={defaultPacaImg}
+                        alt="Imagen por defecto"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          borderRadius: 0,
+                          border: 'none',
+                          backgroundColor: colors.background,
+                          display: 'block',
+                          padding: '1rem'
+                        }}
+                      />
+                    )}
                   </div>
                   <div
                     style={{
@@ -338,5 +402,73 @@ const Pacas = () => {
     </section>
   );
 };
+
+// Estilos para la versión móvil y tablet
+const responsiveStyles = `
+  @media (max-width: 1024px) {
+    section > div {
+      flex-direction: column;
+    }
+    
+    aside {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 0 2rem 0 !important;
+      padding: 1rem !important;
+      border-right: none !important;
+    }
+    
+    main {
+      width: 100%;
+      padding-left: 0 !important;
+    }
+    
+    aside:last-child {
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-top: 2rem !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    section > div {
+      padding: 1.5rem 1rem !important;
+    }
+    
+    main > div {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.5rem 1rem !important;
+    }
+    
+    main > div > div {
+      max-width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    main > div {
+      grid-template-columns: 1fr !important;
+    }
+    
+    main > div > div {
+      margin: 0 auto !important;
+      max-width: 90% !important;
+    }
+  }
+`;
+
+// Añadir los estilos al documento
+React.useEffect(() => {
+  // Crear elemento de estilo
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = responsiveStyles;
+  document.head.appendChild(style);
+  
+  // Limpieza al desmontar
+  return () => {
+    document.head.removeChild(style);
+  };
+}, []);
 
 export default Pacas;

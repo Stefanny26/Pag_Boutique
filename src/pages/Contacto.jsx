@@ -4,8 +4,8 @@ import localImg from '../assets/Fachada.jpeg';
 import pacaImg from '../assets/PAca1.png';
 
 const Contacto = () => (
-  <section style={{ background: colors.background, padding: '4rem 1rem' }}>
-    <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+  <section style={{ background: colors.background, padding: '4rem 1rem' }} className="contacto-section">
+    <div style={{ maxWidth: '1100px', margin: '0 auto' }} className="contacto-container">
       <h2 style={{
         textAlign: 'center',
         marginBottom: '3rem',
@@ -44,7 +44,7 @@ const Contacto = () => (
         borderRadius: '30px',
         overflow: 'hidden',
         padding: '20px'
-      }}>
+      }} className="contact-grid">
         {/* Imagen de la boutique - Columna izquierda */}
         <div style={{
           borderRadius: '20px',
@@ -97,7 +97,7 @@ const Contacto = () => (
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: '1.5rem',
-        }}>
+        }} className="right-column">
           {/* Tarjeta de Contacto */}
           <div style={{
             background: colors.white,
@@ -396,43 +396,266 @@ const Contacto = () => (
       </div>
     </div>
 
-    {/* Responsividad */}
+    {/* Responsividad mejorada para todos los dispositivos */}
     <style>{`
+      /* Estilos base para mejorar la responsividad */
+      .contacto-section {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .contacto-container {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .contact-grid {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      /* Estilos para tabletas y dispositivos medianos */
       @media (max-width: 900px) {
-        div[style*='gridTemplateColumns: 1fr 1fr'] {
+        div[style*='gridTemplateColumns: 1fr 1fr'], 
+        .right-column,
+        .contact-grid {
           grid-template-columns: 1fr !important;
+          width: 100% !important;
         }
+        
         [style*="gridRow: span 3"] {
           grid-row: span 1 !important;
           height: 300px !important;
         }
+        
+        [style*="gridColumn: '2'"] {
+          grid-column: 1 !important;
+        }
+        
         iframe {
           height: 200px !important;
           margin-top: 0.5rem;
         }
+        
         h2 {
           font-size: 2rem !important;
         }
+        
         h3 {
           font-size: 1.2rem !important;
         }
-        section > div {
+        
+        .contacto-section > div {
           padding: 1rem !important;
         }
+        
         a[href*="wa.me"] {
           width: 80%;
           margin: 0 auto;
         }
-      }
-
-      /* Hover effects */
-      a[href*="wa.me"]:hover {
-        background: rgba(37, 211, 102, 0.2) !important;
-        transform: translateY(-2px);
+        
+        /* Ajuste de márgenes para mejorar el espaciado */
+        .contact-grid {
+          gap: 1.5rem !important;
+          padding: 15px !important;
+        }
       }
       
-      div[style*="boxShadow"]:hover:not([style*="borderRadius: 50%"]) {
-        transform: translateY(-5px);
+      /* Estilos para dispositivos móviles pequeños */
+      @media (max-width: 480px) {
+        .contacto-section {
+          padding: 2rem 0.5rem !important;
+        }
+        
+        h2 {
+          font-size: 1.8rem !important;
+          margin-bottom: 1.5rem !important;
+          width: 95% !important;
+        }
+        
+        h3 {
+          font-size: 1.1rem !important;
+        }
+        
+        h4 {
+          font-size: 0.95rem !important;
+        }
+        
+        p {
+          font-size: 0.95rem !important;
+        }
+        
+        /* Ajustar margen y padding para mejor uso del espacio */
+        .contacto-section {
+          padding: 2rem 0.5rem !important;
+        }
+        
+        .contact-grid {
+          border-radius: 20px !important;
+          padding: 12px !important;
+          gap: 1rem !important;
+        }
+        
+        /* Ajustar tamaños de tarjetas */
+        div[style*="padding: '1.5rem'"] {
+          padding: 1.2rem !important;
+        }
+        
+        /* Hacer más pequeños los iconos circulares */
+        div[style*="width: '60px'"][style*="height: '60px'"] {
+          width: 50px !important;
+          height: 50px !important;
+          font-size: 1.6rem !important;
+        }
+        
+        /* Ajustar botones de WhatsApp para mejor visibilidad */
+        a[href*="wa.me"] {
+          width: 100%;
+          padding: 8px 5px !important;
+          font-size: 0.9rem !important;
+        }
+        
+        svg {
+          width: 14px !important;
+          height: 14px !important;
+        }
+        
+        /* Hacer la imagen principal más pequeña en móviles muy pequeños */
+        div[style*="gridRow: span 3"] {
+          height: 220px !important;
+          margin-bottom: 0.5rem;
+        }
+        
+        /* Ajustar tamaño del logo flotante en la imagen */
+        div[style*="position: 'absolute'"][style*="bottom: '20px'"][style*="right: '20px'"] {
+          width: 70px !important;
+          height: 70px !important;
+          bottom: 10px !important;
+          right: 10px !important;
+        }
+        
+        /* Ajustar mapa y elementos de dirección */
+        iframe {
+          height: 180px !important;
+        }
+        
+        /* Mejorar espaciado entre elementos */
+        .right-column {
+          gap: 1rem !important;
+        }
+      }
+      
+      /* Ajustes para dispositivos grandes */
+      @media (min-width: 1400px) {
+        .contacto-container {
+          max-width: 1300px !important;
+        }
+        
+        .contact-grid {
+          gap: 2.5rem !important;
+        }
+      }
+
+      /* Orientación horizontal en móviles */
+      @media (max-height: 500px) and (orientation: landscape) {
+        .contacto-section {
+          padding: 1rem 0.5rem !important;
+        }
+        
+        h2 {
+          font-size: 1.7rem !important;
+          margin-bottom: 1rem !important;
+        }
+        
+        div[style*="gridRow: span 3"] {
+          height: 200px !important;
+        }
+        
+        iframe {
+          height: 150px !important;
+        }
+        
+        /* Mejor distribución en landscape */
+        .contact-grid {
+          grid-template-columns: 1fr 1fr !important;
+          gap: 1rem !important;
+        }
+        
+        div[style*="gridColumn: '2'"] {
+          grid-column: 2 !important;
+        }
+        
+        /* Ajustes adicionales para landscape */
+        .right-column {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      
+      /* Optimizaciones para pantallas de alta densidad */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        img {
+          image-rendering: -webkit-optimize-contrast;
+        }
+      }
+
+      /* Animaciones y transiciones suaves */
+      .contacto-section * {
+        transition: all 0.3s ease;
+      }
+      
+      /* Botones de contacto con efecto táctil en móviles */
+      a[href*="wa.me"]:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+      }
+
+      /* Hover effects - solo para dispositivos que lo soportan */
+      @media (hover: hover) {
+        a[href*="wa.me"]:hover {
+          background: rgba(37, 211, 102, 0.2) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+        }
+        
+        div[style*="boxShadow"]:hover:not([style*="borderRadius: 50%"]) {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+      }
+      
+      /* Fix para problemas de visualización en dispositivos iOS */
+      @supports (-webkit-touch-callout: none) {
+        .contact-grid {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+        }
+        
+        div[style*="gridRow: span 3"] {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1 1 100%;
+          flex: 1 1 100%;
+        }
+        
+        .right-column {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1 1 100%;
+          flex: 1 1 100%;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+        }
+        
+        div[style*="gridColumn: '2'"] {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1 1 100%;
+          flex: 1 1 100%;
+        }
       }
     `}</style>
   </section>

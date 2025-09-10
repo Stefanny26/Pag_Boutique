@@ -84,16 +84,61 @@ const Boutique = () => {
     );
   };
 
+  // Estado para menú móvil
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  // Función para alternar menú en dispositivos móviles
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
+
   return (
     <section style={{ background: colors.white, minHeight: '100vh', padding: 0 }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-start', padding: '2.5rem 1.5rem 2.5rem 1.5rem' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'flex-start', padding: '2.5rem 1.5rem 2.5rem 1.5rem' }} className="boutique-container">
+        {/* Botón para menú móvil - Solo visible en móviles */}
+        <button 
+          onClick={toggleMobileMenu} 
+          className="mobile-filter-toggle"
+          style={{
+            display: 'none', // Oculto por defecto, se muestra en CSS responsivo
+            width: '100%',
+            padding: '0.8rem',
+            marginBottom: '1.5rem',
+            backgroundColor: colors.primary,
+            color: colors.white,
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '1rem',
+            fontWeight: '600',
+            cursor: 'pointer',
+            textAlign: 'center',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}
+        >
+          {showMobileMenu ? 'Ocultar filtros' : 'Mostrar filtros'}
+        </button>
+        
         {/* Filtros laterales */}
-        <aside style={{ minWidth: '220px', maxWidth: '260px', marginRight: '2.5rem', borderRight: `1.5px solid ${colors.background}`, paddingRight: '2rem' }}>
+        <aside 
+          className={`boutique-sidebar ${showMobileMenu ? 'show' : ''}`} 
+          style={{ 
+            minWidth: '220px', 
+            maxWidth: '260px', 
+            marginRight: '2.5rem', 
+            borderRight: `1.5px solid ${colors.background}`, 
+            paddingRight: '2rem' 
+          }}
+        >
           <div style={{ fontWeight: 700, fontSize: '1.25rem', color: colors.primary, marginBottom: '2.2rem', letterSpacing: '-1px' }}>Comprar por</div>
           {CATEGORIAS.map(cat => (
             <div key={cat.nombre} style={{ marginBottom: '1.5rem', borderBottom: `1px solid ${colors.background}`, paddingBottom: '1.1rem' }}>
               <button
-                onClick={() => setCategoria(cat.nombre)}
+                onClick={() => {
+                  setCategoria(cat.nombre);
+                  if (window.innerWidth < 768) {
+                    setShowMobileMenu(false); // Cerrar menú al seleccionar categoría en móvil
+                  }
+                }}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -137,5 +182,82 @@ const Boutique = () => {
     </section>
   );
 };
+
+// Estilos para la versión móvil y tablet
+const responsiveStyles = `
+  @media (max-width: 1024px) {
+    .boutique-container {
+      flex-direction: column !important;
+    }
+    
+    .boutique-sidebar {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      margin-right: 0 !important;
+      margin-bottom: 1.5rem !important;
+      padding-right: 0 !important;
+      border-right: none !important;
+      border-bottom: 1.5px solid ${colors.background} !important;
+      padding-bottom: 1rem !important;
+    }
+    
+    main {
+      width: 100%;
+      padding-left: 0 !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-filter-toggle {
+      display: block !important;
+    }
+    
+    .boutique-container {
+      padding: 1.5rem 1rem !important;
+    }
+    
+    .boutique-sidebar {
+      display: none;
+    }
+    
+    .boutique-sidebar.show {
+      display: block;
+    }
+    
+    main > div {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1.5rem 1rem !important;
+    }
+    
+    main > div > div {
+      max-width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    main > div {
+      grid-template-columns: 1fr !important;
+    }
+    
+    main > div > div {
+      margin: 0 auto !important;
+      max-width: 80% !important;
+    }
+  }
+`;
+
+// Añadir los estilos al documento
+React.useEffect(() => {
+  // Crear elemento de estilo
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = responsiveStyles;
+  document.head.appendChild(style);
+  
+  // Limpieza al desmontar
+  return () => {
+    document.head.removeChild(style);
+  };
+}, []);
 
 export default Boutique;

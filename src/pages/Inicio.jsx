@@ -88,7 +88,7 @@ const Inicio = () => (
         <h3 style={{ color: colors.secondary, fontWeight: 500, marginBottom: '1.1rem', fontSize: '1.13rem' }}>
           Boutique y distribuidora de <span style={{ color: colors.accent, fontWeight: 700 }}>Pacas Americanas Premium AAA</span>
         </h3>
-        <div style={{ display: 'flex', gap: '0.7rem', marginBottom: '1.3rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.7rem', marginBottom: '1.3rem', flexWrap: 'wrap' }} className="buttons-container">
           <a
             href="https://wa.me/5930985668130"
             target="_blank"
@@ -141,6 +141,7 @@ const Inicio = () => (
 
     {/* Carrusel */}
     <div
+      className="carrusel-container"
       style={{
         width: '100vw',
         maxWidth: '100vw',
@@ -204,24 +205,79 @@ const Inicio = () => (
 
     <br />
     <style>{`
-      @media (max-width: 900px) {
-        section {
+      @media (max-width: 1024px) {
+        section:first-of-type {
           flex-direction: column !important;
+        }
+        section:first-of-type > div:first-child {
+          flex: 1 !important;
+          width: 100% !important;
+          border-right: none !important;
+          padding: 1rem 0 !important;
+        }
+        section:first-of-type > div:last-child {
+          flex: 1 !important;
+          padding: 2rem !important;
           text-align: center;
+          align-items: center;
         }
-        h1 {
-          font-size: 1.5rem !important;
+        section:first-of-type > div:last-child p {
+          margin: 0 auto;
         }
-        .hero-card {
-          margin: 1.2rem auto !important;
+        section:first-of-type > div:last-child .buttons-container {
+          justify-content: center;
         }
       }
+      
+      @media (max-width: 900px) {
+        h1 {
+          font-size: 1.8rem !important;
+        }
+        h3 {
+          font-size: 1rem !important;
+        }
+        section:last-of-type {
+          margin: 1.5rem auto !important;
+          padding: 1.5rem !important;
+        }
+      }
+      
       @media (max-width: 700px) {
-        section {
-          padding: 1rem !important;
+        section:first-of-type > div:last-child {
+          padding: 1.5rem 1rem !important;
         }
         h1 {
-          font-size: 1.1rem !important;
+          font-size: 1.6rem !important;
+        }
+        .buttons-container {
+          flex-direction: column !important;
+          width: 100% !important;
+          max-width: 300px !important;
+          margin: 0 auto !important;
+        }
+        .buttons-container a {
+          width: 100% !important;
+          margin-bottom: 0.5rem !important;
+          text-align: center !important;
+        }
+        section:last-of-type > div {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .carrusel-container {
+          min-height: 180px !important;
+          height: 50vw !important;
+        }
+        h1 {
+          font-size: 1.4rem !important;
+        }
+        h2 {
+          font-size: 1.2rem !important;
+        }
+        p {
+          font-size: 0.95rem !important;
         }
       }
     `}</style>

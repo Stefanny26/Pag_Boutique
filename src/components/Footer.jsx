@@ -156,7 +156,25 @@ const Footer = () => (
           margin-bottom: 0.7rem;
         }
         footer > div > div {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
           gap: 0.7rem !important;
+        }
+      }
+      @media (max-width: 480px) {
+        footer > div > div {
+          grid-template-columns: 1fr !important;
+          text-align: center;
+        }
+        footer ul {
+          display: inline-block;
+          text-align: left;
+          margin: 0 auto !important;
+        }
+        footer p {
+          font-size: 0.9rem !important;
+        }
+        footer > div > p {
+          font-size: 0.8rem !important;
         }
       }
     `}</style>

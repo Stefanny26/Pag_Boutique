@@ -183,6 +183,12 @@ const Navbar = () => {
           color: ${colors.white} !important;
         }
         
+        @media (max-width: 1024px) {
+          nav {
+            padding: 0.7rem 0 !important;
+          }
+        }
+        
         @media (max-width: 900px) {
           .brand-text {
             font-size: 1.6rem;
@@ -217,6 +223,28 @@ const Navbar = () => {
           }
           .menu-items a:not(:last-child) {
             border-bottom: 1px solid ${colors.background};
+          }
+        }
+        
+        @media (max-width: 600px) {
+          .brand-text {
+            font-size: 1.3rem !important;
+          }
+          nav > div {
+            padding: 0 0.8rem !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .brand-text {
+            font-size: 1.1rem !important;
+          }
+          nav span:first-child {
+            font-size: 1.8rem !important;
+          }
+          .menu-items a {
+            width: 90%;
+            font-size: 1rem !important;
           }
         }
       `}</style>
