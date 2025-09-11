@@ -181,83 +181,82 @@ const Boutique = () => {
       </div>
     </section>
   );
+  
+  // Estilos para la versión móvil y tablet
+  React.useEffect(() => {
+    const responsiveStyles = `
+      @media (max-width: 1024px) {
+        .boutique-container {
+          flex-direction: column !important;
+        }
+        
+        .boutique-sidebar {
+          min-width: 100% !important;
+          max-width: 100% !important;
+          margin-right: 0 !important;
+          margin-bottom: 1.5rem !important;
+          padding-right: 0 !important;
+          border-right: none !important;
+          border-bottom: 1.5px solid ${colors.background} !important;
+          padding-bottom: 1rem !important;
+        }
+        
+        main {
+          width: 100%;
+          padding-left: 0 !important;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .mobile-filter-toggle {
+          display: block !important;
+        }
+        
+        .boutique-container {
+          padding: 1.5rem 1rem !important;
+        }
+        
+        .boutique-sidebar {
+          display: none;
+        }
+        
+        .boutique-sidebar.show {
+          display: block;
+        }
+        
+        main > div {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1.5rem 1rem !important;
+        }
+        
+        main > div > div {
+          max-width: 100% !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        main > div {
+          grid-template-columns: 1fr !important;
+        }
+        
+        main > div > div {
+          margin: 0 auto !important;
+          max-width: 80% !important;
+        }
+      }
+    `;
+    
+    // Crear elemento de estilo
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = responsiveStyles;
+    document.head.appendChild(style);
+    
+    // Limpieza al desmontar
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 };
-
-// Estilos para la versión móvil y tablet
-const responsiveStyles = `
-  @media (max-width: 1024px) {
-    .boutique-container {
-      flex-direction: column !important;
-    }
-    
-    .boutique-sidebar {
-      min-width: 100% !important;
-      max-width: 100% !important;
-      margin-right: 0 !important;
-      margin-bottom: 1.5rem !important;
-      padding-right: 0 !important;
-      border-right: none !important;
-      border-bottom: 1.5px solid ${colors.background} !important;
-      padding-bottom: 1rem !important;
-    }
-    
-    main {
-      width: 100%;
-      padding-left: 0 !important;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .mobile-filter-toggle {
-      display: block !important;
-    }
-    
-    .boutique-container {
-      padding: 1.5rem 1rem !important;
-    }
-    
-    .boutique-sidebar {
-      display: none;
-    }
-    
-    .boutique-sidebar.show {
-      display: block;
-    }
-    
-    main > div {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 1.5rem 1rem !important;
-    }
-    
-    main > div > div {
-      max-width: 100% !important;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    main > div {
-      grid-template-columns: 1fr !important;
-    }
-    
-    main > div > div {
-      margin: 0 auto !important;
-      max-width: 80% !important;
-    }
-  }
-`;
-
-// Añadir los estilos al documento
-React.useEffect(() => {
-  // Crear elemento de estilo
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = responsiveStyles;
-  document.head.appendChild(style);
-  
-  // Limpieza al desmontar
-  return () => {
-    document.head.removeChild(style);
-  };
-}, []);
 
 export default Boutique;

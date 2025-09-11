@@ -202,90 +202,89 @@ const Nosotros = () => {
       </div>
     </section>
   );
+  
+  // Estilos para la versión móvil y tablet
+  React.useEffect(() => {
+    const responsiveStyles = `
+      @media (max-width: 1024px) {
+        section {
+          padding: 2rem 1rem !important;
+        }
+        
+        .cloud {
+          padding: 2rem 2rem !important;
+          margin-bottom: 2.5rem !important;
+        }
+        
+        h2 {
+          font-size: 2rem !important;
+          margin-bottom: 2rem !important;
+        }
+        
+        h3 {
+          font-size: 1.5rem !important;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .cloud {
+          padding: 1.5rem 1.5rem !important;
+          margin-bottom: 2rem !important;
+        }
+        
+        .cloud-content {
+          gap: 1.5rem !important;
+        }
+        
+        p {
+          font-size: 1.1rem !important;
+          line-height: 1.6 !important;
+        }
+        
+        img {
+          max-width: 100% !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        h2 {
+          font-size: 1.8rem !important;
+        }
+        
+        h3 {
+          font-size: 1.3rem !important;
+          margin-bottom: 1rem !important;
+        }
+        
+        .cloud {
+          padding: 1.2rem 1rem !important;
+          border-radius: 30px !important;
+        }
+        
+        p {
+          font-size: 1rem !important;
+        }
+      }
+    `;
+    
+    // Agregar clases a los elementos para seleccionar en CSS
+    const clouds = document.querySelectorAll('section > div');
+    clouds.forEach(cloud => cloud.classList.add('cloud'));
+    
+    const contentDivs = document.querySelectorAll('.cloud > div:not([style*="position: absolute"])');
+    contentDivs.forEach(div => div.classList.add('cloud-content'));
+    
+    // Crear elemento de estilo
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = responsiveStyles;
+    document.head.appendChild(style);
+    
+    // Limpieza al desmontar
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 }
-
-// Estilos para la versión móvil y tablet
-const responsiveStyles = `
-  @media (max-width: 1024px) {
-    section {
-      padding: 2rem 1rem !important;
-    }
-    
-    .cloud {
-      padding: 2rem 2rem !important;
-      margin-bottom: 2.5rem !important;
-    }
-    
-    h2 {
-      font-size: 2rem !important;
-      margin-bottom: 2rem !important;
-    }
-    
-    h3 {
-      font-size: 1.5rem !important;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .cloud {
-      padding: 1.5rem 1.5rem !important;
-      margin-bottom: 2rem !important;
-    }
-    
-    .cloud-content {
-      gap: 1.5rem !important;
-    }
-    
-    p {
-      font-size: 1.1rem !important;
-      line-height: 1.6 !important;
-    }
-    
-    img {
-      max-width: 100% !important;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 1.8rem !important;
-    }
-    
-    h3 {
-      font-size: 1.3rem !important;
-      margin-bottom: 1rem !important;
-    }
-    
-    .cloud {
-      padding: 1.2rem 1rem !important;
-      border-radius: 30px !important;
-    }
-    
-    p {
-      font-size: 1rem !important;
-    }
-  }
-`;
-
-// Añadir clases a los elementos y los estilos al documento
-React.useEffect(() => {
-  // Agregar clases a los elementos para seleccionar en CSS
-  const clouds = document.querySelectorAll('section > div');
-  clouds.forEach(cloud => cloud.classList.add('cloud'));
-  
-  const contentDivs = document.querySelectorAll('.cloud > div:not([style*="position: absolute"])');
-  contentDivs.forEach(div => div.classList.add('cloud-content'));
-  
-  // Crear elemento de estilo
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = responsiveStyles;
-  document.head.appendChild(style);
-  
-  // Limpieza al desmontar
-  return () => {
-    document.head.removeChild(style);
-  };
-}, []);
 
 export default Nosotros;

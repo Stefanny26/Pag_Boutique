@@ -401,74 +401,73 @@ const Pacas = () => {
       </div>
     </section>
   );
+  
+  // Estilos para la versión móvil y tablet
+  React.useEffect(() => {
+    const responsiveStyles = `
+      @media (max-width: 1024px) {
+        section > div {
+          flex-direction: column;
+        }
+        
+        aside {
+          min-width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 0 2rem 0 !important;
+          padding: 1rem !important;
+          border-right: none !important;
+        }
+        
+        main {
+          width: 100%;
+          padding-left: 0 !important;
+        }
+        
+        aside:last-child {
+          width: 100% !important;
+          margin-left: 0 !important;
+          margin-top: 2rem !important;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        section > div {
+          padding: 1.5rem 1rem !important;
+        }
+        
+        main > div {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1.5rem 1rem !important;
+        }
+        
+        main > div > div {
+          max-width: 100% !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        main > div {
+          grid-template-columns: 1fr !important;
+        }
+        
+        main > div > div {
+          margin: 0 auto !important;
+          max-width: 90% !important;
+        }
+      }
+    `;
+    
+    // Crear elemento de estilo
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = responsiveStyles;
+    document.head.appendChild(style);
+    
+    // Limpieza al desmontar
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 };
-
-// Estilos para la versión móvil y tablet
-const responsiveStyles = `
-  @media (max-width: 1024px) {
-    section > div {
-      flex-direction: column;
-    }
-    
-    aside {
-      min-width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 0 2rem 0 !important;
-      padding: 1rem !important;
-      border-right: none !important;
-    }
-    
-    main {
-      width: 100%;
-      padding-left: 0 !important;
-    }
-    
-    aside:last-child {
-      width: 100% !important;
-      margin-left: 0 !important;
-      margin-top: 2rem !important;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    section > div {
-      padding: 1.5rem 1rem !important;
-    }
-    
-    main > div {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 1.5rem 1rem !important;
-    }
-    
-    main > div > div {
-      max-width: 100% !important;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    main > div {
-      grid-template-columns: 1fr !important;
-    }
-    
-    main > div > div {
-      margin: 0 auto !important;
-      max-width: 90% !important;
-    }
-  }
-`;
-
-// Añadir los estilos al documento
-React.useEffect(() => {
-  // Crear elemento de estilo
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = responsiveStyles;
-  document.head.appendChild(style);
-  
-  // Limpieza al desmontar
-  return () => {
-    document.head.removeChild(style);
-  };
-}, []);
 
 export default Pacas;
