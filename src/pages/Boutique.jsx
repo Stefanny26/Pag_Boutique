@@ -16,10 +16,12 @@ const Boutique = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Base URL de la API
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+
   useEffect(() => {
     setLoading(true);
-  const API = import.meta.env.VITE_API_URL || '';
-  fetch(`${API}/api/productos`)
+    fetch(`${API}/api/productos`)
       .then(res => res.json())
       .then(data => {
         setProductos(data);
@@ -34,6 +36,24 @@ const Boutique = () => {
   const productosFiltrados = productos.filter(
     p => CATEGORIAS.find(cat => cat.nombre === categoria).tipos.map(t => t.toLowerCase()).includes((p.tipo || '').toLowerCase())
   );
+
+  // Función para arreglar URLs de imágenes
+  const fixImageUrl = (url) => {
+    if (!url) return '/src/assets/react.svg'; // imagen por defecto
+    
+    // Si ya es una URL completa, usarla como está
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+    
+    // Si es una ruta relativa (comienza con /), añadir la base URL
+    if (url.startsWith('/')) {
+      return `${API}${url}`;
+    }
+    
+    // En cualquier otro caso, asumimos que es una ruta relativa sin / inicial
+    return `${API}/${url}`;
+  };
 
   const Card = ({ prod }) => {
     const mensaje = `Hola! Quiero comprar este producto de la boutique:%0A%0A` +
@@ -53,7 +73,21 @@ const Boutique = () => {
         border: 'none',
         margin: '0 auto 2.2rem auto',
       }}>
-        <img src={prod.imagen || '/src/assets/react.svg'} alt={prod.nombre} style={{ width: '100%', height: '170px', objectFit: 'contain', background: '#fff', marginBottom: '1.1rem' }} />
+        <img 
+          src={fixImageUrl(prod.imagen)} 
+          alt={prod.nombre} 
+          style={{ 
+            width: '100%', 
+            height: '170px', 
+            objectFit: 'contain', 
+            background: '#fff', 
+            marginBottom: '1.1rem' 
+          }}
+          onError={(e) => {
+            console.error("Error cargando imagen del producto:", prod.imagen);
+            e.target.src = '/src/assets/react.svg';
+          }}
+        />
         <div style={{ marginBottom: '0.6rem', fontWeight: 600, color: colors.primary, fontSize: '1rem' }}>{prod.nombre}</div>
         <div style={{ color: colors.secondary, fontSize: '0.98rem', marginBottom: '0.15rem' }}>Talla: {prod.talla}</div>
         <div style={{ color: colors.secondary, fontSize: '0.98rem', marginBottom: '0.15rem' }}>Tipo: {prod.tipo}</div>

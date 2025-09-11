@@ -9,10 +9,12 @@ const BoutiqueAdmin = ({ colors }) => {
   const [saving, setSaving] = useState(false);
   const [editId, setEditId] = useState(null);
 
+  // Base URL de la API - definir aquí para que esté disponible en todo el componente
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+
   const fetchProductos = () => {
     setLoading(true);
-  const API = import.meta.env.VITE_API_URL || '';
-  fetch(`${API}/api/productos`)
+    fetch(`${API}/api/productos`)
       .then(res => res.json())
       .then(data => { setProductos(data); setLoading(false); })
       .catch(() => { setError('Error al cargar productos'); setLoading(false); });
@@ -78,7 +80,7 @@ const BoutiqueAdmin = ({ colors }) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar este producto?')) return;
-  await fetch(`${API}/api/productos/${id}`, { method: 'DELETE' });
+    await fetch(`${API}/api/productos/${id}`, { method: 'DELETE' });
     fetchProductos();
   };
 
@@ -101,16 +103,58 @@ const BoutiqueAdmin = ({ colors }) => {
               onChange={async e => {
                 const file = e.target.files[0];
                 if (!file) return;
-                const data = new FormData();
-                data.append('imagen', file);
-                const res = await fetch(`${API}/api/upload`, { method: 'POST', body: data });
-                const result = await res.json();
-                if (result.url) setForm(f => ({ ...f, imagen: result.url }));
+                
+                try {
+                  const data = new FormData();
+                  data.append('imagen', file);
+                  
+                  console.log('Subiendo imagen a:', `${API}/api/upload`);
+                  const res = await fetch(`${API}/api/upload`, { 
+                    method: 'POST', 
+                    body: data 
+                  });
+                  
+                  if (!res.ok) {
+                    throw new Error(`Error al subir imagen: ${res.status}`);
+                  }
+                  
+                  const result = await res.json();
+                  console.log('Respuesta de upload:', result);
+                  
+                  if (result.url) {
+                    setForm(f => ({ ...f, imagen: result.url }));
+                  } else {
+                    throw new Error('No se recibió URL de imagen');
+                  }
+                } catch (error) {
+                  console.error('Error al subir imagen:', error);
+                  setError(`Error al subir imagen: ${error.message}`);
+                }
               }}
               style={{ marginBottom: 4 }}
             />
             {form.imagen && (
-              <img src={form.imagen} alt="preview" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 8, marginTop: 4, border: `1px solid ${colors.accent}` }} />
+              <div>
+                <img 
+                  src={form.imagen.startsWith('http') ? form.imagen : `${API}${form.imagen}`} 
+                  alt="preview" 
+                  style={{ 
+                    width: 80, 
+                    height: 80, 
+                    objectFit: 'cover', 
+                    borderRadius: 8, 
+                    marginTop: 4, 
+                    border: `1px solid ${colors.accent}` 
+                  }} 
+                  onError={(e) => {
+                    console.error('Error cargando imagen preview:', form.imagen);
+                    e.target.style.display = 'none';
+                  }}
+                />
+                <div style={{ fontSize: '12px', color: colors.secondary, marginTop: '4px' }}>
+                  {form.imagen}
+                </div>
+              </div>
             )}
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -127,7 +171,39 @@ const BoutiqueAdmin = ({ colors }) => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
           {productos.map((prod) => (
             <div key={prod.id} style={{ background: colors.white, borderRadius: 12, boxShadow: `0 2px 8px ${colors.shadow}`, padding: 16, position: 'relative' }}>
-              <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8, marginBottom: 10, background: colors.background }} />
+              {prod.imagen ? (
+                <img 
+                  src={prod.imagen.startsWith('http') ? prod.imagen : `${API}${prod.imagen}`} 
+                  alt={prod.nombre} 
+                  style={{ 
+                    width: '100%', 
+                    height: 120, 
+                    objectFit: 'cover', 
+                    borderRadius: 8, 
+                    marginBottom: 10, 
+                    background: colors.background 
+                  }}
+                  onError={(e) => {
+                    console.error('Error cargando imagen del producto:', prod.imagen);
+                    e.target.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <div style={{ 
+                  width: '100%', 
+                  height: 120, 
+                  borderRadius: 8, 
+                  marginBottom: 10, 
+                  background: colors.background,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: colors.secondary,
+                  fontSize: '14px'
+                }}>
+                  Sin imagen
+                </div>
+              )}
               <div style={{ fontWeight: 800, color: colors.primary, fontSize: 17 }}>{prod.nombre}</div>
               <div style={{ color: colors.secondary, fontSize: 14, marginBottom: 4 }}>Talla: {prod.talla || '-'}</div>
               <div style={{ color: colors.secondary, fontSize: 14, marginBottom: 4 }}>Tipo: {prod.tipo || '-'}</div>
