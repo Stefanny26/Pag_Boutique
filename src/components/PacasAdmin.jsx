@@ -218,6 +218,9 @@ const PacasAdmin = ({ colors }) => {
             style={{ width: '100%', marginBottom: 8, padding: 7, borderRadius: 6, border: `1px solid ${colors.accent}` }}
           />
           <div style={{ marginBottom: 8 }}>
+            <label style={{ display: 'block', marginBottom: 4, fontWeight: 600, color: colors.primary }}>
+              Imagen:
+            </label>
             <input
               type="file"
               accept="image/*"
@@ -234,13 +237,20 @@ const PacasAdmin = ({ colors }) => {
                   setError('');
                   setSaving(true);
                   
+                  console.log('Intentando subir a:', `${API}/api/upload`);
                   const res = await fetch(`${API}/api/upload`, { 
                     method: 'POST', 
                     body: data 
                   });
                   
+                  console.log('Respuesta del servidor:', res.status, res.statusText);
+                  
                   if (!res.ok) {
-                    throw new Error(`Error al subir imagen: ${res.status} ${res.statusText}`);
+                    if (res.status === 404) {
+                      throw new Error('Endpoint de subida no encontrado. Verifica que el servidor esté funcionando.');
+                    }
+                    const errorText = await res.text().catch(() => 'Error desconocido');
+                    throw new Error(`Error al subir imagen: ${res.status} - ${errorText}`);
                   }
                   
                   const result = await res.json();
@@ -249,18 +259,43 @@ const PacasAdmin = ({ colors }) => {
                   if (result.url) {
                     console.log("URL de imagen recibida:", result.url);
                     setForm(f => ({ ...f, imagen: result.url }));
+                    alert('Imagen subida correctamente');
                   } else {
                     throw new Error('No se recibió URL de imagen');
                   }
                 } catch (error) {
                   console.error("Error subiendo imagen:", error);
                   setError(`Error al subir imagen: ${error.message}`);
-                } finally {
-                  setSaving(false);
                 }
+                setSaving(false);
               }}
-              style={{ marginBottom: 4 }}
+              style={{ 
+                marginBottom: 8,
+                padding: '8px',
+                border: `1px solid ${colors.accent}`,
+                borderRadius: '4px',
+                width: '100%'
+              }}
             />
+            
+            {/* Campo manual para URL de imagen */}
+            <label style={{ display: 'block', marginBottom: 4, fontWeight: 600, color: colors.primary }}>
+              O ingresa URL de imagen:
+            </label>
+            <input
+              type="url"
+              placeholder="https://ejemplo.com/imagen.jpg"
+              value={form.imagen}
+              onChange={e => setForm(f => ({ ...f, imagen: e.target.value }))}
+              style={{ 
+                width: '100%', 
+                marginBottom: 8, 
+                padding: 7, 
+                borderRadius: 6, 
+                border: `1px solid ${colors.accent}` 
+              }}
+            />
+            
             {form.imagen && (
               <div style={{ marginTop: 8, marginBottom: 8 }}>
                 <p style={{ fontSize: '12px', color: colors.secondary, marginBottom: 4 }}>
@@ -283,6 +318,9 @@ const PacasAdmin = ({ colors }) => {
                     e.target.src = 'https://via.placeholder.com/80?text=Error';
                   }}
                 />
+                <div style={{ fontSize: '10px', color: colors.secondary, marginTop: '4px', wordBreak: 'break-all' }}>
+                  {form.imagen}
+                </div>
               </div>
             )}
           </div>
