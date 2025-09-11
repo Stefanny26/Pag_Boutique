@@ -10,7 +10,19 @@ import { initializeDatabase } from './initDb.js';
 
 // Configure Express
 const app = express();
-app.use(cors());
+
+// Configurar CORS para permitir el frontend de Render
+const corsOptions = {
+  origin: [
+    'https://pag-boutique-frontend.onrender.com',
+    'http://localhost:5173', // Para desarrollo local
+    'http://localhost:3000'  // Backup para desarrollo
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Agregar endpoint de health check para servicios de hosting
@@ -66,17 +78,25 @@ app.post('/api/upload', upload.single('imagen'), (req, res) => {
       return res.status(400).json({ error: 'No se recibió ningún archivo' });
     }
 
-    // Construir la URL del archivo
-    const fileUrl = `/uploads/${req.file.filename}`;
+    // Construir la URL del archivo (absoluta para producción)
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? `https://${req.get('host')}` 
+      : `http://localhost:${process.env.PORT || 5000}`;
+    
+    const fileUrl = `${baseUrl}/uploads/${req.file.filename}`;
     
     console.log('Archivo subido:', req.file.filename);
     console.log('URL generada:', fileUrl);
+    console.log('Base URL:', baseUrl);
     
     res.json({ 
       url: fileUrl,
       filename: req.file.filename,
       originalname: req.file.originalname,
-      size: req.file.size
+      size: req.file.size,
+      warning: process.env.NODE_ENV === 'production' 
+        ? 'ADVERTENCIA: Los archivos subidos en Render son temporales y se perderán al reiniciar el servidor. Se recomienda usar URLs de imágenes externas.'
+        : null
     });
   } catch (error) {
     console.error('Error en upload:', error);

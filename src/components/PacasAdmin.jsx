@@ -30,7 +30,7 @@ const PacasAdmin = ({ colors }) => {
       return url;
     }
     
-    // Si es una ruta relativa (comienza con /), añadir la base URL
+    // Si es una ruta relativa (comienza con /), añadir la base URL del API
     if (url.startsWith('/')) {
       return `${API}${url}`;
     }
@@ -259,7 +259,12 @@ const PacasAdmin = ({ colors }) => {
                   if (result.url) {
                     console.log("URL de imagen recibida:", result.url);
                     setForm(f => ({ ...f, imagen: result.url }));
-                    alert('Imagen subida correctamente');
+                    
+                    if (result.warning) {
+                      alert(`Imagen subida correctamente.\n\n⚠️ ${result.warning}`);
+                    } else {
+                      alert('Imagen subida correctamente');
+                    }
                   } else {
                     throw new Error('No se recibió URL de imagen');
                   }
@@ -280,11 +285,11 @@ const PacasAdmin = ({ colors }) => {
             
             {/* Campo manual para URL de imagen */}
             <label style={{ display: 'block', marginBottom: 4, fontWeight: 600, color: colors.primary }}>
-              O ingresa URL de imagen:
+              O ingresa URL de imagen (recomendado para producción):
             </label>
             <input
               type="url"
-              placeholder="https://ejemplo.com/imagen.jpg"
+              placeholder="https://ejemplo.com/imagen.jpg o https://imgur.com/imagen.jpg"
               value={form.imagen}
               onChange={e => setForm(f => ({ ...f, imagen: e.target.value }))}
               style={{ 
@@ -295,6 +300,9 @@ const PacasAdmin = ({ colors }) => {
                 border: `1px solid ${colors.accent}` 
               }}
             />
+            <div style={{ fontSize: '12px', color: colors.secondary, marginBottom: 8, padding: '8px', backgroundColor: '#e8f4fd', borderRadius: '4px' }}>
+              💡 <strong>Consejo:</strong> Para mejores resultados en producción, usa servicios como Imgur, Cloudinary, o Google Drive para alojar tus imágenes.
+            </div>
             
             {form.imagen && (
               <div style={{ marginTop: 8, marginBottom: 8 }}>
