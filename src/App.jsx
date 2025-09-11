@@ -17,7 +17,14 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main style={{ minHeight: '70vh', background: '#ecf3fe' }}>
+      <main style={{ 
+        minHeight: '70vh', 
+        background: '#ecf3fe',
+        width: '100%',
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         <Routes>
           <Route path='/' element={<Inicio />} />
           <Route path='/pacas' element={<Pacas />} />
